@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>EdukIT Dashboard</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    height:100vh;
+    background: linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+    overflow:hidden;
+    color:white;
+}
+
+/* animated background bubbles */
+.circle{
+    position:absolute;
+    width:200px;
+    height:200px;
+    background:rgba(255,255,255,0.1);
+    border-radius:50%;
+    animation:float 10s infinite ease-in-out;
+}
+.circle:nth-child(1){top:10%;left:10%;}
+.circle:nth-child(2){top:60%;left:70%;animation-delay:3s;}
+.circle:nth-child(3){top:30%;left:50%;animation-delay:6s;}
+
+@keyframes float{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-40px);}
+    100%{transform:translateY(0);}
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    padding:20px;
+    font-size:28px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.header a{
+    font-size:16px;
+    text-decoration:none;
+    color:white;
+    background:#ff4d4d;
+    padding:10px 18px;
+    border-radius:10px;
+    font-weight:600;
+}
+
+.container{
+    text-align:center;
+    margin-top:80px;
+}
+
+.proverb{
+    font-style:italic;
+    font-size:20px;
+    margin-bottom:40px;
+    animation:fade 3s infinite alternate;
+}
+
+@keyframes fade{
+    from{opacity:0.6;}
+    to{opacity:1;}
+}
+
+h2{
+    font-size:32px;
+    margin-bottom:30px;
+}
+
+/* BUTTON STYLE (applies to <a>) */
+.btn{
+    display:inline-block;
+    padding:18px 40px;
+    margin:15px;
+    font-size:22px;
+    border-radius:15px;
+    cursor:pointer;
+    background:linear-gradient(145deg,#ff9a00,#ff6a00);
+    box-shadow:0 10px #b54a00;
+    transition:0.2s;
+    color:black;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.btn:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px #b54a00;
+}
+
+.btn:active{
+    transform:translateY(5px);
+    box-shadow:0 5px #b54a00;
+}
+</style>
+</head>
+
+<body>
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+
+<div class="header">
+    edukit
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="container">
+    <div class="proverb">“Education is the key to unlock the golden door of freedom.”</div>
+    <h2>Select the exam you are preparing for</h2>
+
+    <!-- FLASK ROUTES (NOT FILES) -->
+    <a href="/jee" class="btn">JEE</a>
+    <a href="/neet" class="btn">NEET</a>
+    <a href="/upsc" class="btn">UPSC</a>
+</div>
+
+
+</body>
+</html>

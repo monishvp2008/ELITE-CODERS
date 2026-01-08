@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UPSC YouTube Topics</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Poppins:wght@300;500&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+
+<style>
+*{ box-sizing:border-box; }
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+    font-family:Poppins, sans-serif;
+    color:white;
+    padding:40px 20px;
+}
+
+/* ===== HEADER ===== */
+.header{
+    max-width:1000px;
+    margin:auto;
+    text-align:center;
+    margin-bottom:25px;
+}
+.header h1{
+    font-family:Cinzel, serif;
+    letter-spacing:3px;
+    font-size:34px;
+    text-shadow:0 0 15px cyan;
+}
+.header p{
+    opacity:0.85;
+    margin-top:10px;
+}
+
+/* ===== BACK BUTTON ===== */
+.top-bar{
+    max-width:1000px;
+    margin:0 auto 25px;
+}
+.back-btn{
+    display:inline-block;
+    padding:10px 18px;
+    background:#00e5ff;
+    color:#003344;
+    border-radius:20px;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.3s;
+}
+.back-btn:hover{
+    background:#18ffff;
+}
+
+/* ===== GLASS CARD ===== */
+.glass{
+    max-width:1000px;
+    margin:auto;
+    padding:40px;
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.08);
+    border-radius:25px;
+    box-shadow:0 0 50px rgba(0,255,255,0.25);
+}
+
+/* ===== TOPICS ===== */
+.topics{
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+.topic{
+    padding:28px;
+    font-family:Orbitron, sans-serif;
+    font-size:18px;
+    text-align:center;
+    border-radius:22px;
+    background:linear-gradient(145deg,#1e3c72,#2a5298);
+    box-shadow:0 15px 30px rgba(0,0,0,0.6);
+    cursor:pointer;
+    transition:0.35s ease;
+    position:relative;
+    text-decoration:none;
+    color:white;
+}
+
+.topic::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:22px;
+    filter:blur(15px);
+    background:cyan;
+    opacity:0;
+    z-index:-1;
+}
+
+.topic:hover{
+    transform:translateY(-8px) scale(1.05);
+    box-shadow:0 25px 40px rgba(0,255,255,0.6);
+}
+
+.topic:hover::after{
+    opacity:0.45;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+    .glass{ padding:25px; }
+    .header h1{ font-size:26px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>UPSC YouTube Topics</h1>
+    <p>Select a subject to start learning</p>
+</div>
+
+<div class="top-bar">
+    <a href="{{ url_for('upsc_dashboard') }}" class="back-btn">
+        ⬅ Back to UPSC Dashboard
+    </a>
+</div>
+
+<div class="glass">
+    <div class="topics">
+
+        <a href="/upsc/youtube/polity" class="topic">🏛️ Polity</a>
+        <a href="/upsc/youtube/current-affairs" class="topic">📰 Current Affairs</a>
+        <a href="/upsc/youtube/history" class="topic">📜 History</a>
+        <a href="/upsc/youtube/geography" class="topic">🌍 Geography</a>
+        <a href="/upsc/youtube/economy" class="topic">💹 Economy</a>
+
+    </div>
+</div>
+
+</body>
+</html>

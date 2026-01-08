@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #09090b;
+            --card-bg: #18181b;
+            --text-main: #ffffff;
+            --accent: #6366f1;
+            --correct: #10b981;
+            --wrong: #ef4444;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Layout */
+        .app-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: #000;
+            border-right: 1px solid #27272a;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo { font-size: 24px; font-weight: bold; margin-bottom: 40px; color: white; }
+
+        nav a {
+            display: block;
+            color: #a1a1aa;
+            text-decoration: none;
+            padding: 12px;
+            margin-bottom: 5px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        nav a.active, nav a:hover {
+            background-color: #27272a;
+            color: white;
+        }
+
+        .user-info { margin-top: auto; border-top: 1px solid #27272a; padding-top: 20px; }
+        .logout { color: #ef4444; text-decoration: none; font-size: 0.9rem; display: block; margin-top: 10px; }
+
+        main {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Header & Controls */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 { margin: 0; font-size: 1.8rem; }
+
+        .controls { display: flex; gap: 15px; }
+
+        select {
+            background-color: #27272a;
+            color: white;
+            border: 1px solid #3f3f46;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-primary:hover { background-color: #4f46e5; }
+
+        .btn-secondary {
+            background-color: #3f3f46;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Quiz Grid */
+        .quiz-grid {
+            display: grid;
+            gap: 20px;
+            padding-bottom: 50px;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #27272a;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .question-text { font-size: 1.1rem; margin-bottom: 20px; font-weight: 600; }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .option-btn {
+            padding: 15px;
+            background-color: #27272a;
+            border: 1px solid #3f3f46;
+            color: #d4d4d8;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .option-btn:hover:not([disabled]) {
+            background-color: #3f3f46;
+            border-color: #52525b;
+            color: white;
+        }
+
+        /* Feedback States */
+        .option-btn.correct { background-color: rgba(16, 185, 129, 0.15); border-color: var(--correct); color: var(--correct); }
+        .option-btn.wrong { background-color: rgba(239, 68, 68, 0.15); border-color: var(--wrong); color: var(--wrong); }
+
+        .feedback { margin-top: 15px; font-weight: bold; font-size: 0.9rem; padding-left: 5px; }
+        .correct-text { color: var(--correct); }
+        .wrong-text { color: var(--wrong); }
+
+        .loading { color: #71717a; text-align: center; margin-top: 50px; font-size: 1.1rem; }
+        .hidden { display: none; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .app-container { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; padding: 15px; flex-direction: row; align-items: center; justify-content: space-between; }
+            .sidebar nav, .user-info { display: none; } /* Simplify for mobile view */
+            .options-grid { grid-template-columns: 1fr; }
+            main { padding: 20px; }
+            header { flex-direction: column; align-items: flex-start; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <nav>
+                <a href="#" class="active" onclick="switchTab('practice')">Practice</a>
+            </nav>
+            <div class="user-info">
+                <a href="#" onclick="location.reload()" class="logout">Reset App</a>
+            </div>
+        </aside>
+
+        <main>
+            <header>
+                <div>
+                    <h1>{{ exam }} Daily Practice</h1>
+                    <p style="color:#a1a1aa;font-size:0.9rem;">
+                        Test your {{ exam }} preparation
+                    </p>
+                    <a href="/{{ exam.lower() }}" class="btn-secondary">
+                        ⬅ Back to {{ exam }} Dashboard
+                    </a>
+                </div>
+
+                <div class="controls">
+                    <select id="track-select">
+                        <option value="JEE">JEE (Engineering)</option>
+                        <option value="NEET">NEET (Medical)</option>
+                        <option value="UPSC">UPSC (Civil Services)</option>
+                        <option value="GATE">GATE (CS/IT)</option>
+                    </select>
+                    <button onclick="generateQuiz()" class="btn-primary">New Quiz</button>
+                </div>
+            </header>
+
+
+            <div id="quiz-container" class="quiz-grid">
+                </div>
+        </main>
+    </div>
+
+    <script>
+        // --- 1. THE DATA (Question Bank) ---
+        const QUESTION_BANK = {
+            JEE: [
+                { q: "Dimensions of Universal Gravitational Constant (G)?", options: ["M-1 L3 T-2", "M L2 T-1", "M-2 L2 T-1", "M L3 T-2"], ans: 0 },
+                { q: "Area under a v-t graph represents?", options: ["Force", "Displacement", "Acceleration", "Power"], ans: 1 },
+                { q: "Which is a scalar quantity?", options: ["Displacement", "Force", "Work", "Torque"], ans: 2 },
+                { q: "Integration of sin(x) dx is?", options: ["cos(x)", "-cos(x)", "sin(x)", "-sin(x)"], ans: 1 },
+                { q: "Hybridization of Xenon in XeF4?", options: ["sp3", "sp3d", "sp3d2", "sp3d3"], ans: 2 },
+                { q: "Value of i^4?", options: ["1", "-1", "i", "-i"], ans: 0 },
+                { q: "Slope of line parallel to X-axis?", options: ["0", "1", "-1", "Undefined"], ans: 0 },
+                { q: "Bond angle in water molecule?", options: ["104.5°", "107°", "109.5°", "120°"], ans: 0 }
+            ],
+            NEET: [
+                { q: "Powerhouse of the cell?", options: ["Nucleus", "Mitochondria", "Ribosome", "Golgi"], ans: 1 },
+                { q: "Number of chambers in a crocodile heart?", options: ["2", "3", "3.5", "4"], ans: 3 },
+                { q: "Universal recipient blood group?", options: ["O-", "AB+", "B+", "A+"], ans: 1 },
+                { q: "pH of human blood?", options: ["6.0", "7.4", "8.0", "5.5"], ans: 1 },
+                { q: "Functional unit of Kidney?", options: ["Neuron", "Nephron", "Alveoli", "Villi"], ans: 1 },
+                { q: "Lightest element?", options: ["He", "H", "Li", "Be"], ans: 1 },
+                { q: "Baking soda is?", options: ["Na2CO3", "NaHCO3", "NaCl", "NaOH"], ans: 1 }
+            ],
+            UPSC: [
+                { q: "Who drafted the Indian Constitution?", options: ["Gandhi", "Nehru", "Ambedkar", "Patel"], ans: 2 },
+                { q: "Fundamental Rights are borrowed from?", options: ["UK", "USA", "USSR", "Ireland"], ans: 1 },
+                { q: "Ramsar Convention relates to?", options: ["Forests", "Wetlands", "Ozone", "Wildlife"], ans: 1 },
+                { q: "First Battle of Panipat?", options: ["1526", "1556", "1761", "1857"], ans: 0 },
+                { q: "Repo rate is decided by?", options: ["SBI", "Ministry of Finance", "RBI", "SEBI"], ans: 2 },
+                { q: "Guardian of the Constitution?", options: ["President", "PM", "Supreme Court", "Parliament"], ans: 2 }
+            ],
+            GATE: [
+                { q: "Worst case complexity of QuickSort?", options: ["O(n)", "O(n log n)", "O(n²)", "O(1)"], ans: 2 },
+                { q: "Value of NULL pointer in C?", options: ["0", "-1", "Void", "Garbage"], ans: 0 },
+                { q: "Dijkstra algorithm is used for?", options: ["Sorting", "Shortest Path", "MST", "Searching"], ans: 1 },
+                { q: "Layer for end-to-end delivery?", options: ["Network", "Transport", "Data Link", "Session"], ans: 1 },
+                { q: "Number of edges in K5 graph?", options: ["5", "10", "15", "20"], ans: 1 }
+            ]
+        };
+
+        // --- 2. APP STATE ---
+        let currentQuiz = [];
+        const DEFAULT_EXAM = "{{ exam }}";
+
+        // --- 3. FUNCTIONS ---
+
+
+        function generateQuiz() {
+            const track = document.getElementById('track-select').value;
+            const container = document.getElementById('quiz-container');
+            
+            // Show Loading
+            container.innerHTML = '<div class="loading">Generating personalized questions...</div>';
+
+            // Simulate AI delay for effect
+            setTimeout(() => {
+                const pool = QUESTION_BANK[track] || QUESTION_BANK['JEE'];
+                // Shuffle and pick 4 questions
+                const shuffled = [...pool].sort(() => 0.5 - Math.random());
+                currentQuiz = shuffled.slice(0, 4);
+                
+                renderQuiz();
+            }, 600);
+        }
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+
+            if (currentQuiz.length === 0) {
+                container.innerHTML = '<div class="loading">No questions available.</div>';
+                return;
+            }
+
+            currentQuiz.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                
+                let optionsHtml = '';
+                q.options.forEach((opt, optIdx) => {
+                    optionsHtml += `
+                        <button class="option-btn" onclick="checkAnswer(${index}, ${optIdx}, this)">
+                            ${opt}
+                        </button>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="question-text">${index + 1}. ${q.q}</div>
+                    <div class="options-grid">${optionsHtml}</div>
+                    <div class="feedback hidden" id="feedback-${index}"></div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function checkAnswer(qIdx, selectedOpt, btnElement) {
+            const question = currentQuiz[qIdx];
+            const feedbackEl = document.getElementById(`feedback-${qIdx}`);
+            const parent = btnElement.parentElement;
+
+            // Disable all buttons in this card to prevent changing answer
+            Array.from(parent.children).forEach(btn => btn.disabled = true);
+
+            if (selectedOpt === question.ans) {
+                btnElement.classList.add('correct');
+                feedbackEl.innerText = "✓ Correct Answer";
+                feedbackEl.className = "feedback correct-text";
+            } else {
+                btnElement.classList.add('wrong');
+                // Highlight the correct one so user learns
+                parent.children[question.ans].classList.add('correct');
+                feedbackEl.innerText = "✗ Incorrect Answer";
+                feedbackEl.className = "feedback wrong-text";
+            }
+        }
+
+        // Initialize on load
+        window.onload = () => {
+            document.getElementById("track-select").value = DEFAULT_EXAM;
+            generateQuiz();
+        };
+
+    </script>
+
+    <script>
+        (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="WMJQg_20O6zKS09iBSSad";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+    </script>
+</body>
+</html>

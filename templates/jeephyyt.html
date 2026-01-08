@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JEE Physics – YouTube Learning Hub</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins','Comic Sans MS',sans-serif;
+    background:linear-gradient(135deg,#1d2671,#c33764);
+    color:#fff;
+    overflow-x:hidden;
+}
+
+/* ===== HEADER ===== */
+.header{
+    text-align:center;
+    padding:25px;
+    font-size:38px;
+    font-weight:900;
+    text-shadow:3px 3px #000;
+    animation:floatText 2s infinite;
+}
+@keyframes floatText{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+}
+
+/* ===== TOP BAR ===== */
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:92%;
+    margin:auto;
+    margin-bottom:10px;
+}
+
+.back-btn{
+    padding:10px 18px;
+    background:#00ffcc;
+    color:#000;
+    border-radius:20px;
+    text-decoration:none;
+    font-weight:600;
+}
+
+/* ===== SEARCH ===== */
+.search-box{
+    width:92%;
+    margin:auto;
+}
+.search-box input{
+    width:100%;
+    padding:14px;
+    font-size:18px;
+    border-radius:25px;
+    border:none;
+    outline:none;
+}
+
+/* ===== PROGRESS ===== */
+.progress-wrap{
+    width:92%;
+    margin:20px auto;
+}
+.progress-bar{
+    height:20px;
+    background:#333;
+    border-radius:20px;
+    overflow:hidden;
+}
+.progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#00ffcc,#ffea00);
+    transition:0.5s;
+}
+.progress-text{
+    text-align:right;
+    font-size:14px;
+    margin-top:5px;
+}
+
+/* ===== CONTAINER ===== */
+.container{
+    width:92%;
+    margin:auto;
+}
+
+/* ===== CARD ===== */
+.card{
+    background:rgba(255,255,255,0.12);
+    border-radius:25px;
+    padding:25px;
+    margin:35px 0;
+    box-shadow:0 15px 35px rgba(0,0,0,0.6);
+    backdrop-filter:blur(10px);
+    transition:0.4s;
+}
+.card:hover{
+    transform:scale(1.03);
+}
+
+/* ===== TITLE ===== */
+.chapter{
+    font-size:26px;
+    font-weight:700;
+    color:#ffea00;
+}
+
+/* ===== LINK ===== */
+.link{
+    margin:15px 0;
+    font-size:16px;
+}
+.link a{
+    color:#00ffcc;
+    text-decoration:none;
+    font-weight:bold;
+}
+.link a:hover{
+    text-decoration:underline;
+}
+
+/* ===== FLOATING ORBS ===== */
+.orb{
+    position:fixed;
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.15);
+    animation:float 10s infinite ease-in-out;
+}
+.orb:nth-child(1){top:15%;left:5%;}
+.orb:nth-child(2){bottom:10%;right:5%;animation-delay:3s;}
+
+@keyframes float{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-40px);}
+    100%{transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="orb"></div>
+<div class="orb"></div>
+
+<div class="header">
+🌸 JEE Physics – YouTube Learning Hub 🌸
+</div>
+
+<div class="top-bar">
+    <a href="{{ url_for('jee_dashboard') }}" class="back-btn">
+        ⬅ Back to JEE Dashboard
+    </a>
+</div>
+
+<div class="search-box">
+<input type="text" id="search" placeholder="🔍 Search chapter name">
+</div>
+
+<div class="progress-wrap">
+<div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
+<div class="progress-text" id="text">0% Completed</div>
+</div>
+
+<div class="container" id="list">
+
+<!-- ===== CHAPTER CARD ===== -->
+<div class="card" data-title="units and measurements">
+<div class="chapter">Units and Measurements</div>
+<div class="link">
+<a href="https://www.youtube.com/results?search_query=units+and+measurements+jee+physics+english" target="_blank">
+▶ Watch on YouTube
+</a>
+</div>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<div class="card" data-title="motion in a straight line">
+<div class="chapter">Motion in a Straight Line</div>
+<div class="link">
+<a href="https://www.youtube.com/results?search_query=motion+in+a+straight+line+jee+physics+english" target="_blank">
+▶ Watch on YouTube
+</a>
+</div>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<div class="card" data-title="motion in a plane">
+<div class="chapter">Motion in a Plane</div>
+<div class="link">
+<a href="https://www.youtube.com/results?search_query=motion+in+a+plane+jee+physics+english" target="_blank">
+▶ Watch on YouTube
+</a>
+</div>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<div class="card" data-title="laws of motion">
+<div class="chapter">Laws of Motion</div>
+<div class="link">
+<a href="https://www.youtube.com/results?search_query=laws+of+motion+jee+physics+english" target="_blank">
+▶ Watch on YouTube
+</a>
+</div>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<div class="card" data-title="work power energy">
+<div class="chapter">Work, Power and Energy</div>
+<div class="link">
+<a href="https://www.youtube.com/results?search_query=work+power+energy+jee+physics+english" target="_blank">
+▶ Watch on YouTube
+</a>
+</div>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<div class="card" data-title="gravitation">
+<div class="chapter">Gravitation</div>
+<div class="link">
+<a href="https://www.youtube.com/results?search_query=gravitation+jee+physics+english" target="_blank">
+▶ Watch on YouTube
+</a>
+</div>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<div class="card" data-title="electrostatics">
+<div class="chapter">Electric Charges and Fields</div>
+<div class="link">
+<a href="https://www.youtube.com/results?search_query=electric+charges+and+fields+jee+physics+english" target="_blank">
+▶ Watch on YouTube
+</a>
+</div>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<div class="card" data-title="current electricity">
+<div class="chapter">Current Electricity</div>
+<div class="link">
+<a href="https://www.youtube.com/results?search_query=current+electricity+jee+physics+english" target="_blank">
+▶ Watch on YouTube
+</a>
+</div>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<div class="card" data-title="ray optics">
+<div class="chapter">Ray Optics</div>
+<div class="link">
+<a href="https://www.youtube.com/results?search_query=ray+optics+jee+physics+english" target="_blank">
+▶ Watch on YouTube
+</a>
+</div>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<div class="card" data-title="semiconductors">
+<div class="chapter">Semiconductors</div>
+<div class="link">
+<a href="https://www.youtube.com/results?search_query=semiconductors+jee+physics+english" target="_blank">
+▶ Watch on YouTube
+</a>
+</div>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+</div>
+
+<script>
+/* SEARCH */
+const s = document.getElementById("search");
+const cards = document.querySelectorAll(".card");
+
+s.addEventListener("keyup",()=>{
+  let v = s.value.toLowerCase();
+  cards.forEach(c=>{
+    c.style.display = c.dataset.title.includes(v) ? "block" : "none";
+  });
+});
+
+/* PROGRESS (JEE Physics namespace) */
+const chk = document.querySelectorAll(".chk");
+const fill = document.getElementById("fill");
+const text = document.getElementById("text");
+
+chk.forEach((c,i)=>{
+  c.checked = localStorage.getItem("jee_phy_"+i) === "1";
+  c.onchange = ()=>{
+    localStorage.setItem("jee_phy_"+i, c.checked ? "1" : "0");
+    update();
+  };
+});
+
+function update(){
+  let done = 0;
+  chk.forEach(c=>{ if(c.checked) done++; });
+  let p = Math.round((done / chk.length) * 100);
+  fill.style.width = p + "%";
+  text.innerText = p + "% Completed";
+}
+update();
+</script>
+
+</body>
+</html>

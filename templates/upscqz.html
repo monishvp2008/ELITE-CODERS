@@ -1,0 +1,63 @@
+<h1>🧠 UPSC Daily Practice Quiz</h1>
+<!DOCTYPE html>
+<html>
+<head>
+<title>NEET Online Quiz</title>
+<style>
+body{
+    background:#0f2027;
+    color:white;
+    font-family:Poppins;
+}
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:40px;
+}
+.subjects{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+}
+.card{
+    background:#1f4068;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    cursor:pointer;
+}
+.card:hover{
+    background:#1b6ca8;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+    <h1>🏛️ UPSC Online Quiz</h1>
+
+<div class="subjects">
+    <div onclick="startQuiz('Polity','UPSC')">📜 Polity</div>
+    <div onclick="startQuiz('History','UPSC')">🏺 History</div>
+    <div onclick="startQuiz('Geography','UPSC')">🌍 Geography</div>
+    <div onclick="startQuiz('Economy','UPSC')">💰 Economy</div>
+    <div onclick="startQuiz('Current Affairs','UPSC')">📰 Current Affairs</div>
+</div>
+
+
+
+    <div id="quiz"></div>
+</div>
+
+<script>
+function startQuiz(subject, exam){
+    fetch(`/quiz?exam=${exam}&subject=${subject}`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("quiz").innerHTML =
+                `<h2>${subject} Quiz</h2><pre>${data.quiz}</pre>`;
+        });
+}
+</script>
+</body>
+</html>

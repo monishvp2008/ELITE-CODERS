@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>NEET Biology</title>
+<style>
+body{margin:0;font-family:Poppins;background:linear-gradient(135deg,#56ab2f,#a8e063);color:#fff}
+.header{text-align:center;font-size:42px;padding:30px}
+input{width:90%;margin:auto;display:block;padding:14px;border-radius:25px;border:none}
+.card{width:90%;margin:25px auto;background:rgba(255,255,255,.2);padding:25px;border-radius:25px}
+.chapter{font-size:26px;color:#004d40}
+a{color:#1b5e20;font-weight:bold;text-decoration:none}
+</style>
+</head>
+
+<body>
+<div class="header">🧬 NEET Biology – Watch on YouTube</div>
+<input id="s" placeholder="Search biology chapter">
+
+<div class="card" data="cell">
+<div class="chapter">Cell – Structure & Function</div>
+<a target="_blank" href="https://www.youtube.com/results?search_query=cell+structure+neet+biology+english">▶ Watch</a>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<div class="card" data="biomolecules">
+<div class="chapter">Biomolecules</div>
+<a target="_blank" href="https://www.youtube.com/results?search_query=biomolecules+neet+biology+english">▶ Watch</a>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<div class="card" data="photosynthesis">
+<div class="chapter">Photosynthesis</div>
+<a target="_blank" href="https://www.youtube.com/results?search_query=photosynthesis+neet+biology+english">▶ Watch</a>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<div class="card" data="human">
+<div class="chapter">Human Physiology</div>
+<a target="_blank" href="https://www.youtube.com/results?search_query=human+physiology+neet+biology+english">▶ Watch</a>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<div class="card" data="genetics">
+<div class="chapter">Genetics & Evolution</div>
+<a target="_blank" href="https://www.youtube.com/results?search_query=genetics+neet+biology+english">▶ Watch</a>
+<div><input type="checkbox" class="chk"> Completed</div>
+</div>
+
+<script>
+let s=document.getElementById("s"),c=document.querySelectorAll(".card");
+s.onkeyup=()=>c.forEach(x=>x.style.display=x.dataset.includes(s.value.toLowerCase())?"block":"none");
+</script>
+</body>
+</html>
+

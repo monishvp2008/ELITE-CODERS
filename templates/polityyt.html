@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UPSC Polity – YouTube Resources</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins&family=Orbitron&display=swap" rel="stylesheet">
+
+<style>
+*{ box-sizing:border-box; }
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+    font-family:Poppins, sans-serif;
+    padding:40px 20px;
+}
+
+/* ===== HEADER ===== */
+.header{
+    max-width:1100px;
+    margin:auto;
+    text-align:center;
+    margin-bottom:20px;
+}
+.header h1{
+    text-shadow:0 0 20px cyan;
+    font-size:34px;
+}
+
+/* ===== TOP BAR ===== */
+.top-bar{
+    max-width:1100px;
+    margin:0 auto 30px;
+}
+.back-btn{
+    display:inline-block;
+    padding:10px 18px;
+    background:cyan;
+    color:#002b2b;
+    border-radius:20px;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.3s;
+}
+.back-btn:hover{
+    background:#18ffff;
+}
+
+/* ===== GRID ===== */
+.grid{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+}
+
+/* ===== CARD ===== */
+.card{
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(15px);
+    border-radius:25px;
+    padding:22px;
+    transition:0.4s;
+    box-shadow:0 10px 25px rgba(0,0,0,0.5);
+}
+.card:hover{
+    transform:translateY(-8px) scale(1.04);
+    box-shadow:0 0 35px cyan;
+}
+
+/* ===== TEXT ===== */
+.chapter{
+    color:cyan;
+    font-family:Orbitron, sans-serif;
+    font-size:20px;
+}
+.source{
+    margin-top:8px;
+    opacity:0.9;
+}
+.stats{
+    display:flex;
+    justify-content:space-between;
+    margin:12px 0;
+    font-size:14px;
+    opacity:0.85;
+}
+
+/* ===== BUTTON ===== */
+.watch-btn{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 15px;
+    border-radius:15px;
+    background:cyan;
+    color:#002b2b;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+.watch-btn:hover{
+    background:#18ffff;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+    .header h1{ font-size:26px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🏛️ UPSC Polity – YouTube Resources</h1>
+</div>
+
+<div class="top-bar">
+    <a href="/upsc/youtube" class="back-btn">
+        ⬅ Back to UPSC Topics
+    </a>
+</div>
+
+<div class="grid">
+
+    <div class="card">
+        <div class="chapter">Indian Constitution</div>
+        <div class="source">StudyIQ IAS</div>
+        <div class="stats">
+            <span>👁 3M+</span>
+            <span>👍 120K+</span>
+        </div>
+        <a class="watch-btn" target="_blank"
+           href="https://www.youtube.com/results?search_query=indian+constitution+upsc+studyiq">
+           ▶ Watch
+        </a>
+        <div><input type="checkbox" class="chk"> Completed</div>
+    </div>
+
+    <div class="card">
+        <div class="chapter">Fundamental Rights</div>
+        <div class="source">Unacademy UPSC</div>
+        <div class="stats">
+            <span>👁 2M+</span>
+            <span>👍 90K+</span>
+        </div>
+        <a class="watch-btn" target="_blank"
+           href="https://www.youtube.com/results?search_query=fundamental+rights+upsc+unacademy">
+           ▶ Watch
+        </a>
+        <div><input type="checkbox" class="chk"> Completed</div>
+    </div>
+
+    <div class="card">
+        <div class="chapter">Parliament</div>
+        <div class="source">Vision IAS</div>
+        <div class="stats">
+            <span>👁 1.5M+</span>
+            <span>👍 70K+</span>
+        </div>
+        <a class="watch-btn" target="_blank"
+           href="https://www.youtube.com/results?search_query=parliament+upsc+vision+ias">
+           ▶ Watch
+        </a>
+        <div><input type="checkbox" class="chk"> Completed</div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edukit – AI Exam Prep</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- Animated Background -->
+<div class="bg-circle c1"></div>
+<div class="bg-circle c2"></div>
+<div class="bg-circle c3"></div>
+
+<!-- Main Container -->
+<div class="hero">
+
+    <h1>🎓 Edukit</h1>
+    <p class="tagline">
+        AI-powered preparation for <span>JEE</span>, <span>NEET</span> & <span>UPSC</span>
+    </p>
+
+    <p class="subtitle">
+        Smart quizzes • YouTube learning • Flashcards • Daily streaks
+    </p>
+
+    <!-- Login Button -->
+    <a href="/login" class="login-link">
+        <button class="google-btn">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
+            Continue with Google
+        </button>
+    </a>
+
+    <p class="footer-text">
+        🚀 Learn smarter. Track progress. Crack exams.
+    </p>
+
+</div>
+
+<!-- Chatbase AI Assistant -->
+<script>
+(function(){
+    if(!window.chatbase||window.chatbase("getState")!=="initialized"){
+        window.chatbase=(...args)=>{(window.chatbase.q=window.chatbase.q||[]).push(args)}
+        window.chatbase=new Proxy(window.chatbase,{get:(t,p)=>p==="q"?t.q:(...a)=>t(p,...a)})
+    }
+    const load=()=>{
+        const s=document.createElement("script");
+        s.src="https://www.chatbase.co/embed.min.js";
+        s.id="WMJQg_20O6zKS09iBSSad";
+        s.domain="www.chatbase.co";
+        document.body.appendChild(s);
+    };
+    document.readyState==="complete"?load():window.addEventListener("load",load);
+})();
+</script>
+
+</body>
+</html>

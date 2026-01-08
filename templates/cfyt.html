@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UPSC Current Affairs – YouTube Hub</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    padding:40px 20px;
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#1c1c1c,#3a0f0f,#6f0000);
+    color:#fff;
+    overflow-x:hidden;
+}
+
+/* ===== HEADER ===== */
+.header{
+    text-align:center;
+    margin-bottom:35px;
+}
+.header h1{
+    font-size:38px;
+    font-weight:700;
+    text-shadow:0 0 18px rgba(255,0,0,0.6);
+}
+.header p{
+    opacity:0.85;
+    margin-top:8px;
+}
+
+/* ===== TOP BAR ===== */
+.top-bar{
+    max-width:1200px;
+    margin:0 auto 25px;
+}
+.back-btn{
+    display:inline-block;
+    padding:10px 18px;
+    background:#b30000;
+    color:#fff;
+    border-radius:20px;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.3s;
+}
+.back-btn:hover{
+    background:#ff1a1a;
+}
+
+/* ===== GRID ===== */
+.grid{
+    max-width:1200px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+}
+
+/* ===== CARD ===== */
+.card{
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(12px);
+    border-radius:22px;
+    padding:22px;
+    box-shadow:0 15px 35px rgba(0,0,0,0.6);
+    transition:0.35s ease;
+    position:relative;
+    overflow:hidden;
+}
+.card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:22px;
+    border:1px solid rgba(255,255,255,0.08);
+}
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 35px rgba(255,0,0,0.5);
+}
+
+/* ===== TEXT ===== */
+.chapter{
+    font-family:'Orbitron',sans-serif;
+    font-size:20px;
+    color:#ff4c4c;
+    margin-bottom:8px;
+}
+.source{
+    opacity:0.85;
+    margin-bottom:12px;
+}
+.stats{
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+    opacity:0.85;
+    margin-bottom:18px;
+}
+
+/* ===== BUTTON ===== */
+.watch-btn{
+    display:inline-block;
+    padding:10px 18px;
+    background:#ff1a1a;
+    color:white;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.3s;
+}
+.watch-btn:hover{
+    background:#ff4c4c;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+    body{padding:25px 15px;}
+    .header h1{font-size:30px;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🏛️ UPSC Current Affairs</h1>
+    <p>Trusted YouTube resources for daily & monthly coverage</p>
+</div>
+
+<div class="top-bar">
+    <a href="{{ url_for('upsc_dashboard') }}" class="back-btn">
+        ⬅ Back to UPSC Dashboard
+    </a>
+</div>
+
+<div class="grid">
+
+    <!-- CARD 1 -->
+    <div class="card">
+        <div class="chapter">Daily Current Affairs</div>
+        <div class="source">Vision IAS</div>
+        <div class="stats">
+            <span>👁 4M+ views</span>
+            <span>👍 180K+ likes</span>
+        </div>
+        <a class="watch-btn" target="_blank"
+           href="https://www.youtube.com/results?search_query=daily+current+affairs+upsc+vision+ias">
+            ▶ Watch on YouTube
+        </a>
+        <div><input type="checkbox" class="chk"> Completed</div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="card">
+        <div class="chapter">Monthly Current Affairs</div>
+        <div class="source">StudyIQ IAS</div>
+        <div class="stats">
+            <span>👁 2M+ views</span>
+            <span>👍 95K+ likes</span>
+        </div>
+        <a class="watch-btn" target="_blank"
+           href="https://www.youtube.com/results?search_query=monthly+current+affairs+upsc+studyiq">
+            ▶ Watch on YouTube
+        </a>
+        <div><input type="checkbox" class="chk"> Completed</div>
+    </div>
+
+</div>
+
+</body>
+</html>
