@@ -1,8 +1,9 @@
-# 🎓 AI Exam Prep Platform (JEE | NEET | UPSC | GATE)
+# 🎓 AI Exam Prep Platform (JEE | NEET | UPSC )
 first clone the entire code from git hub and then run
 Build and Run
 Open your terminal in the project directory and run:
 
+and go to the directory where the file is stored and access the cmd from there by using the directory where the file is stored
 Bash
 
 docker-compose up --build
@@ -65,6 +66,7 @@ A full-stack AI-powered exam preparation platform built using **Flask**, **HTML/
 
 ---
 Prototype video link: https://vimeo.com/1152631685?fl=ip&fe=ec
+
 
 
 
