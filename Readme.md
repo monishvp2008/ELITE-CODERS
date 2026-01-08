@@ -64,6 +64,7 @@ A full-stack AI-powered exam preparation platform built using **Flask**, **HTML/
 - External trusted sources (Mathongo / Archive)
 
 ---
+Prototype video link: https://vimeo.com/1152631685?fl=ip&fe=ec
 
-##  Project Structure
+
 
