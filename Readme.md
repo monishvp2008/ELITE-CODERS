@@ -12,7 +12,7 @@ Wait for the build to complete. You will see a log message indicating the server
 3. Access the Application
 Open your web browser and visit:
 
-http://127.0.0.1:5000
+http://127.0.0.1:5000 or 5001
 
 A full-stack AI-powered exam preparation platform built using **Flask**, **HTML/CSS/JS**, and **Chart.js**, featuring:
 - Google Authentication
@@ -66,6 +66,7 @@ A full-stack AI-powered exam preparation platform built using **Flask**, **HTML/
 
 ---
 Prototype video link: https://vimeo.com/1152631685?fl=ip&fe=ec
+
 
 
 
