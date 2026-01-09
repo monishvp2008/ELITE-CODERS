@@ -1,5 +1,5 @@
 # 🎓 AI Exam Prep Platform (JEE | NEET | UPSC )
-first clone the entire code from git hub and then run
+First clone the entire code from git hub and then run
 Build and Run
 Open your terminal in the project directory and run:
 
@@ -13,6 +13,11 @@ Wait for the build to complete. You will see a log message indicating the server
 Open your web browser and visit:
 
 http://127.0.0.1:5000 or 5001
+
+Test Oauth credentials have been used. This doesn't result in any security risks.
+The test Oauth keys are:
+GOOGLE_CLIENT_ID=659446210252-6m90c2g5t3f9oq1r37d412on8nk4uh0q.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
 
 A full-stack AI-powered exam preparation platform built using **Flask**, **HTML/CSS/JS**, and **Chart.js**, featuring:
 - Google Authentication
@@ -66,6 +71,7 @@ A full-stack AI-powered exam preparation platform built using **Flask**, **HTML/
 
 ---
 Prototype video link: https://vimeo.com/1152631685?fl=ip&fe=ec
+
 
 
 
