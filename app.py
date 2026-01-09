@@ -1,4 +1,5 @@
-from flask import Flask, render_template, redirect, url_for, session
+from functools import wraps
+from flask import Flask, render_template, redirect, url_for, session, g
 from authlib.integrations.flask_client import OAuth
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
@@ -39,41 +40,59 @@ google = oauth.register(
     name="google",
     client_id="659446210252-6m90c2g5t3f9oq1r37d412on8nk4uh0q.apps.googleusercontent.com",
     client_secret="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",
-    access_token_url="https://accounts.google.com/o/oauth2/token",
-    authorize_url="https://accounts.google.com/o/oauth2/auth",
-    api_base_url="https://www.googleapis.com/oauth2/v1/",
-    client_kwargs={"scope": "email profile"}
+    server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
+    client_kwargs={"scope": "openid email profile"}
 )
 
-# -------------------------                 
-# Routes
-# -------------------------
+# =========================
+# LOGIN REQUIRED DECORATOR
+# =========================
+def login_required(view):
+    @wraps(view)
+    def wrapped_view(*args, **kwargs):
+        user_id = session.get("user_id")
+        if not user_id:
+            return redirect(url_for("login"))
 
+        user = db.session.get(User, user_id)
+        if not user:
+            session.clear()
+            return redirect(url_for("login"))
+
+        g.user = user
+        return view(*args, **kwargs)
+    return wrapped_view
+
+# =========================
+# OAUTH SETUP
+# =========================
+
+# =========================
+# AUTH ROUTES
+# =========================
 @app.route("/")
 def home():
     return render_template("index.html")
-
 
 @app.route("/login")
 def login():
     return google.authorize_redirect(url_for("authorize", _external=True))
 
-
 @app.route("/authorize")
 def authorize():
-    token = google.authorize_access_token()
-    user_info = google.get("userinfo").json()
+    google.authorize_access_token()
+    user_info = google.userinfo()
 
-    user = User.query.filter_by(email=user_info["email"]).first()
     today = date.today()
+    user = User.query.filter_by(email=user_info["email"]).first()
 
     if not user:
         user = User(
-            google_id=user_info["id"],
+            google_id=user_info["sub"],
             name=user_info["name"],
             email=user_info["email"],
             streak=1,
-            last_login=today
+            last_login=today,
         )
         db.session.add(user)
     else:
@@ -82,197 +101,133 @@ def authorize():
             user.last_login = today
 
     db.session.commit()
-
     session["user_id"] = user.id
+    return redirect(url_for("dashboard"))
 
-    return redirect("/dashboard")
-
-
-# =========================
-# DASHBOARD
-# =========================
-@app.route("/dashboard")
-def dashboard():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    user = User.query.get(session["user_id"])
-    return render_template("dashboard.html", user=user)
-
-
-# =========================
-# JEE
-# =========================
-@app.route("/jee")
-def jee_dashboard():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    user = User.query.get(session["user_id"])
-    return render_template("jee.html", user=user)
-
-# JEE PYQs
-@app.route("/jee/pyqs")
-def jee_pyqs():
-    if "user_id" not in session:
-        return redirect("/login")
-    user = User.query.get(session["user_id"])
-    return render_template("jeepyq.html", user=user)
-
-
-@app.route("/neet")
-def neet_dashboard():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    user = User.query.get(session["user_id"])
-    return render_template("neet.html", user=user)
-
-
-# NEET PYQs
-@app.route("/neet/pyqs")
-def neet_pyqs():
-    if "user_id" not in session:
-        return redirect("/login")
-    user = User.query.get(session["user_id"])
-    return render_template("neetpyq.html", user=user)
-
-
-
-# =========================
-# UPSC
-# =========================
-@app.route("/upsc")
-def upsc_dashboard():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    user = User.query.get(session["user_id"])
-    return render_template("upsc.html", user=user)
-
-
-@app.route("/upsc/youtube")
-def upsc_youtube_topics():
-    if "user_id" not in session:
-        return redirect("/login")
-    user = User.query.get(session["user_id"])
-    return render_template("upscyt.html",user=user)
-
-
-@app.route("/upsc/pyqs")
-def upsc_pyqs():
-    if "user_id" not in session:
-        return redirect("/login")
-    user = User.query.get(session["user_id"])
-    return render_template("upscpyq.html",user=user)
-
-
-# =========================
-# LOGOUT
-# =========================
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect("/")
 
-@app.route("/jee/youtube/physics")
-def jee_physics_youtube():
-    if "user_id" not in session:
-        return redirect("/login")
+# =========================
+# DASHBOARD
+# =========================
+@app.route("/dashboard")
+@login_required
+def dashboard():
+    return render_template("dashboard.html", user=g.user)
 
-    user = User.query.get(session["user_id"])
-    return render_template("jeephyyt.html", user=user)
+# =========================
+# JEE
+# =========================
+@app.route("/jee")
+@login_required
+def jee_dashboard():
+    return render_template("jee.html", user=g.user)
+
+@app.route("/jee/pyqs")
+@login_required
+def jee_pyqs():
+    return render_template("jeepyq.html", user=g.user)
+
+@app.route("/jee/youtube/physics")
+@login_required
+def jee_physics_youtube():
+    return render_template("jeephyyt.html", user=g.user)
 
 @app.route("/jee/youtube/chemistry")
+@login_required
 def jee_chemistry_youtube():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    user = User.query.get(session["user_id"])
-    return render_template("jeechemyt.html", user=user)
+    return render_template("jeechemyt.html", user=g.user)
 
 @app.route("/jee/youtube/maths")
+@login_required
 def jee_mathematics_youtube():
-    if "user_id" not in session:
-        return redirect("/login")
+    return render_template("jeemathyt.html", user=g.user)
 
-    user = User.query.get(session["user_id"])
-    return render_template("jeemathyt.html", user=user)
+# =========================
+# NEET
+# =========================
+@app.route("/neet")
+@login_required
+def neet_dashboard():
+    return render_template("neet.html", user=g.user)
+
+@app.route("/neet/pyqs")
+@login_required
+def neet_pyqs():
+    return render_template("neetpyq.html", user=g.user)
 
 @app.route("/neet/youtube/physics")
+@login_required
 def neet_physics_youtube():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    user = User.query.get(session["user_id"])
-    return render_template("neetphyyt.html", user=user)
+    return render_template("neetphyyt.html", user=g.user)
 
 @app.route("/neet/youtube/chemistry")
+@login_required
 def neet_chemistry_youtube():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    user = User.query.get(session["user_id"])
-    return render_template("neetchemyt.html", user=user)
+    return render_template("neetchemyt.html", user=g.user)
 
 @app.route("/neet/youtube/biology")
+@login_required
 def neet_biology_youtube():
-    if "user_id" not in session:
-        return redirect("/login")
+    return render_template("neetbioyt.html", user=g.user)
 
-    user = User.query.get(session["user_id"])
-    return render_template("neetbioyt.html", user=user)
+# =========================
+# UPSC
+# =========================
+@app.route("/upsc")
+@login_required
+def upsc_dashboard():
+    return render_template("upsc.html", user=g.user)
+
+@app.route("/upsc/pyqs")
+@login_required
+def upsc_pyqs():
+    return render_template("upscpyq.html", user=g.user)
+
+@app.route("/upsc/youtube")
+@login_required
+def upsc_youtube_topics():
+    return render_template("upscyt.html", user=g.user)
 
 @app.route("/upsc/youtube/current-affairs")
+@login_required
 def upsc_youtube_current_affairs():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    user = User.query.get(session["user_id"])
-    return render_template("cfyt.html", user=user)
+    return render_template("cfyt.html", user=g.user)
 
 @app.route("/upsc/youtube/polity")
+@login_required
 def upsc_youtube_polity():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    user = User.query.get(session["user_id"])
-    return render_template("polityyt.html", user=user)
+    return render_template("polityyt.html", user=g.user)
 
 @app.route("/upsc/youtube/history")
+@login_required
 def upsc_youtube_history():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    user = User.query.get(session["user_id"])
-    return render_template("hisyt.html", user=user)
+    return render_template("hisyt.html", user=g.user)
 
 @app.route("/upsc/youtube/geography")
+@login_required
 def upsc_youtube_geography():
-    if "user_id" not in session:
-        return redirect("/login")
-
-    user = User.query.get(session["user_id"])
-    return render_template("geoyt.html", user=user)
+    return render_template("geoyt.html", user=g.user)
 
 @app.route("/upsc/youtube/economy")
+@login_required
 def upsc_youtube_economy():
-    if "user_id" not in session:
-        return redirect("/login")
+    return render_template("ecoyt.html", user=g.user)
 
-    user = User.query.get(session["user_id"])
-    return render_template("ecoyt.html", user=user)
-
+# =========================
+# QUIZ
+# =========================
 @app.route("/quiz")
+@login_required
 def quiz():
-    if "user_id" not in session:
-        return redirect("/login")
-
     exam = request.args.get("exam", "jee").upper()
     return render_template("quiz.html", exam=exam)
 
-
-
+# =========================
+# RUN
+# =========================
 if __name__ == '__main__':
     # host='0.0.0.0' is REQUIRED for Docker
     app.run(host='0.0.0.0', port=5000, debug=True)
